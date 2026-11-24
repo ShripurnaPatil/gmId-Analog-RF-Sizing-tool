@@ -23,26 +23,18 @@ Square-law hand calculations (\(I_D = \frac{1}{2}\mu C_{ox}\frac{W}{L}(V_{GS}-V_
 
 ### 1. Testbench Setup
 Place one NMOS and one PMOS instance (`W = w`, `L = l`, `m = 1`):
-```text
-         NMOS Testbench                            PMOS Testbench
-              D (vds)                                   S, B (GND)
-
-              |                                         |
-    G (vgs) --| nmos (W=w, L=l)               G (-vgs) --| pmos (W=w, L=l)
-
-              |                                         |
-              S, B (GND)                                D (-vds)
+![Cadence Characterization Testbench](testbench.png)
 ```
-* Set design variables: `w = 10u`, `l = 1u`, `vgs = 0.5`, `vds = 0.6` ($V_{DD}/2$).
+* Set design variables: `w = 10u`, `l = 500n`, `vgs = 500m`, `vds = 500m` .
 
 ### 2. Save DC Operating Points
 1. Open **Launch → ADE L** (or **ADE Explorer**).
-2. Click **Analyses → Choose... → `dc`**, enable **Save DC Operating Point**, sweep **Design Variable** `vgs` from `0` to `1.2` (Linear step `20m`).
+2. Click **Analyses → Choose... → `dc`**, enable **Save DC Operating Point**, sweep **Design Variable** `vgs` from `0` to `1` (Linear step `20m`).
 3. Go to **Outputs → To Be Saved → Select OP Parameters...**, click each transistor, and add: `gm`, `gds`, `id`, `gmoverid`, `cgg`.
 4. Click **Netlist and Run** once.
 
 ### 3. Calculator Expressions (`waveVsWave`)
-Open **Tools → Calculator**, select `os` (Operating Point Sweep), and send these expressions to ADE Outputs:
+Open **Tools → Calculator**, select `os` (Operating Point Sweep) to extract gm,gds,id,gmoverid,cgg, select `var` (Variable) to extract width(`w`) into the stack. Send these expressions to ADE Outputs:
 * **Intrinsic Gain vs. $g_m/I_D$:** `waveVsWave(?x OS("/M0" "gmoverid") ?y (OS("/M0" "gm") / OS("/M0" "gds")))`
 * **Current Density vs. $g_m/I_D$:** `waveVsWave(?x OS("/M0" "gmoverid") ?y (OS("/M0" "id") / VAR("w")))`
 * **Transit Frequency vs. $g_m/I_D$:** `waveVsWave(?x OS("/M0" "gmoverid") ?y (OS("/M0" "gm") / (2 * 3.14159 * OS("/M0" "cgg"))))`
