@@ -9,7 +9,7 @@ Traditional square-law hand calculations ($I_D = \frac{1}{2}\mu C_{ox}\frac{W}{L
 **`gmId_Sizing_tool.m`** automates the $g_m/I_D$ design methodology by parsing raw Cadence Spectre `.vcsv` DC sweeps into an interactive 2D-interpolated Lookup Table (`pchip` across both channel length $L$ and $g_m/I_D$).
 
 ### Key Features
-* **PDK-Agnostic & Auto-Aligning:** Automatically parses any number of `<L>.vcsv` and `<L>gm.vcsv` sweep files from any PDK (`gpdk180`, `gpdk90`, `gpdk45`, `sky130`, etc.), regardless of Cadence column export order.
+* **PDK-Agnostic & Auto-Aligning:** Automatically parses any number of `.vcsv`` sweep files from any PDK (`gpdk180`, `gpdk90`, `gpdk45`, `sky130`, etc.), regardless of Cadence column export order.
 * **Triple-Synced Length ($L$) Control:** Choose extracted lengths via dropdown or indexed slider, or type any intermediate length (e.g., `1.35 µm`) for live 2D interpolation.
 * **Analog & RF Biasing Presets:** One-click $g_m/I_D$ presets for Subthreshold Diff Pairs (`24`), Active Loads (`18`), Current Mirrors (`14`), RF LNAs (`10`), and Mixers/VCOs (`7`).
 * **Bidirectional Solver:** Enter target current ($I_D$ in nA/µA) or target transconductance ($g_m$ in µS/mS) to instantly calculate width ($W$), finger count, gate capacitance ($C_{gg}$), and $|V_{GS}|$.
